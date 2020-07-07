@@ -279,6 +279,7 @@ func (spec *Spec) writePKIToStorage(ca *x509.Certificate, keyPair *tls.Certifica
 	}
 	spec.updateCAExpiry(ca.NotAfter)
 	spec.updateCertExpiry(keyPair.Leaf.NotAfter)
+	SpecLastWrite.WithLabelValues(spec.Name).SetToCurrentTime()
 	return nil
 }
 

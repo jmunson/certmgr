@@ -42,6 +42,17 @@ var (
 		[]string{"name"},
 	)
 
+	// SpecLastWrite is set to the timestamp of when PKI was last written to disk.
+	SpecLastWrite = prometheus.NewGaugeVec(
+		prometheus.GaugeOpts{
+			Namespace: metricsNamespace,
+			Subsystem: "spec",
+			Name:      "last_write_timestamp",
+			Help:      "The epoch value of when this spec's PKI was last successfully written",
+		},
+		[]string{"name"},
+	)
+
 	// SpecWriteFailureCount contains the number of times the PKI on disk failed to be written
 	SpecWriteFailureCount = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
@@ -83,6 +94,7 @@ func init() {
 	prometheus.MustRegister(SpecWriteFailureCount)
 	prometheus.MustRegister(SpecRequestFailureCount)
 	prometheus.MustRegister(SpecNextWake)
+	prometheus.MustRegister(SpecLastWrite)
 }
 
 // WipeMetrics Wipes any metrics that may be recorded for this spec.
